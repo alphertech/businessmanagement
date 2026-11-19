@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Images and screenshots are indexable
+Allow: /assets/
+
+Sitemap: https://opspro.alphertech.com/sitemap.xml
