@@ -549,6 +549,65 @@
             color: #fff;
             box-shadow: 0 7px 16px rgba(37, 99, 235, 0.18);
         }
+        .opspro-nav .opspro-donate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 6px;
+            padding: 10px 15px;
+            border: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            color: #fff;
+            box-shadow: 0 5px 14px rgba(234, 88, 12, 0.24);
+            cursor: pointer;
+            font: 700 0.84rem/1.1 Inter, Arial, sans-serif;
+            white-space: nowrap;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+        .opspro-nav .opspro-donate-btn:hover {
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, #fbbf24, #fb923c);
+            box-shadow: 0 8px 18px rgba(234, 88, 12, 0.3);
+        }
+        .opspro-nav .opspro-donate-btn:focus-visible,
+        .opspro-side-toggle:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
+        .opspro-donation-dialog {
+            width: min(440px, calc(100% - 32px));
+            padding: 28px;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            color: var(--ink);
+            box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+        }
+        .opspro-donation-dialog::backdrop { background: rgba(15, 23, 42, 0.62); backdrop-filter: blur(3px); }
+        .opspro-donation-dialog h2 { margin: 0 0 8px; color: #1e3a8a; font-size: 1.4rem; }
+        .opspro-donation-dialog p { margin: 0 0 18px; color: #64748b; line-height: 1.6; }
+        .opspro-donation-contact { display: grid; gap: 10px; }
+        .opspro-donation-contact a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            color: #1e3a8a;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .opspro-donation-contact a:hover { background: #eff6ff; }
+        .opspro-donation-close {
+            display: block;
+            margin: 20px 0 0 auto;
+            padding: 9px 16px;
+            border: 0;
+            border-radius: 9px;
+            background: #1e3a8a;
+            color: #fff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
         .opspro-menu-btn {
             display: none;
             width: 42px;
@@ -559,6 +618,7 @@
             color: var(--ink);
             cursor: pointer;
         }
+        .opspro-side-toggle { display: none; }
         .opspro-topbar {
             padding: 44px 24px;
             background:
@@ -633,9 +693,28 @@
             .opspro-shell { grid-template-columns: 1fr; }
             .opspro-side {
                 position: relative;
-                max-height: none;
+                max-height: 100vh;
                 border-right: 0;
                 border-bottom: 1px solid var(--line);
+                padding: 10px 16px;
+            }
+            .opspro-side-toggle {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 14px;
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                background: #fff;
+                color: var(--brand);
+                font: 700 0.9rem Inter, Arial, sans-serif;
+                cursor: pointer;
+            }
+            .opspro-side-content { display: none; padding-top: 16px; }
+            .opspro-side.is-open .opspro-side-content {
+                display: block;
+                max-height: calc(100vh - 100px);
+                overflow-y: auto;
             }
             .opspro-content { padding: 20px; }
             .opspro-topbar h1 { font-size: 1.5rem; }
@@ -881,6 +960,7 @@
                 <a href="#" data-target="system">Requirements</a>
                 <a href="#" data-target="overview">User Manual</a>
                 <a href="#" data-target="helpline">Support</a>
+                <button class="opspro-donate-btn" type="button" aria-haspopup="dialog" aria-controls="donationDialog"><i class="fas fa-mug-hot"></i> Buy Me a Coffee</button>
                 <a href="#" class="opspro-nav-cta" data-target="downloads"><i class="fas fa-download"></i>&nbsp; Get OpsPro</a>
             </nav>
             <button class="opspro-menu-btn" type="button" aria-label="Toggle navigation" aria-controls="opsproNav" aria-expanded="false">
@@ -888,6 +968,16 @@
             </button>
         </div>
     </header>
+
+    <dialog class="opspro-donation-dialog" id="donationDialog" aria-labelledby="donationDialogTitle">
+        <h2 id="donationDialogTitle"><i class="fas fa-heart" aria-hidden="true"></i> Support the developers</h2>
+        <p>Thank you for supporting OpsPro. Contact us to request the donation account details.</p>
+        <div class="opspro-donation-contact">
+            <a href="tel:+256708885123"><i class="fas fa-phone" aria-hidden="true"></i> +256 708 885 123</a>
+            <a href="mailto:alphertech@gmail.com?subject=OpsPro%20Donation%20Account"><i class="fas fa-envelope" aria-hidden="true"></i> alphertech@gmail.com</a>
+        </div>
+        <button class="opspro-donation-close" type="button">Close</button>
+    </dialog>
 
     <section class="opspro-topbar">
         <div class="container">
@@ -905,15 +995,19 @@
 
     <div class="opspro-shell">
         <aside class="opspro-side" aria-label="OpsPro navigation">
-            <h3><i class="fas fa-compass"></i> OpsPro</h3>
-            <ul id="opsproMenu">
-                <li><a href="#" class="active" data-target="downloads"><i class="fas fa-download"></i> Downloads</a></li>
-                <li><a href="#" data-target="helpline"><i class="fas fa-headset"></i> Helpline & Support</a></li>
-                <li><a href="#" data-target="versions"><i class="fas fa-code-branch"></i> Version Control</a></li>
-                <li><a href="#" data-target="system"><i class="fas fa-cog"></i> System Requirements</a></li>
-            </ul>
-            <div class="sep">User Manual</div>
-            <ul id="opsproManualMenu">
+            <button class="opspro-side-toggle" type="button" aria-controls="opsproSideContent" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i> OpsPro menu
+            </button>
+            <div class="opspro-side-content" id="opsproSideContent">
+                <h3><i class="fas fa-compass"></i> OpsPro</h3>
+                <ul id="opsproMenu">
+                    <li><a href="#" class="active" data-target="downloads"><i class="fas fa-download"></i> Downloads</a></li>
+                    <li><a href="#" data-target="helpline"><i class="fas fa-headset"></i> Helpline & Support</a></li>
+                    <li><a href="#" data-target="versions"><i class="fas fa-code-branch"></i> Version Control</a></li>
+                    <li><a href="#" data-target="system"><i class="fas fa-cog"></i> System Requirements</a></li>
+                </ul>
+                <div class="sep">User Manual</div>
+                <ul id="opsproManualMenu">
                 <li><a href="#" data-target="overview"><i class="fas fa-book-open"></i> 1. System Overview</a></li>
                 <li><a href="#" data-target="architecture"><i class="fas fa-sitemap"></i> 2. Architecture</a></li>
                 <li><a href="#" data-target="installation"><i class="fas fa-hdd"></i> 3. Installation & Setup</a></li>
@@ -937,7 +1031,8 @@
                 <li><a href="#" data-target="shortcuts"><i class="fas fa-keyboard"></i> 21. Shortcuts</a></li>
                 <li><a href="#" data-target="backup"><i class="fas fa-database"></i> 22. Data Management</a></li>
                 <li><a href="#" data-target="troubleshooting"><i class="fas fa-wrench"></i> 23. Troubleshooting</a></li>
-            </ul>
+                </ul>
+            </div>
         </aside>
 
         <main class="opspro-content">
@@ -1748,8 +1843,21 @@
             link.addEventListener('click', function (e) {
                 e.preventDefault();
                 showPanel(this.getAttribute('data-target'));
+                const sidebar = document.querySelector('.opspro-side');
+                const sidebarToggle = document.querySelector('.opspro-side-toggle');
+                if (sidebar) sidebar.classList.remove('is-open');
+                if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded', 'false');
             });
         });
+
+        const sidebar = document.querySelector('.opspro-side');
+        const sidebarToggle = document.querySelector('.opspro-side-toggle');
+        if (sidebar && sidebarToggle) {
+            sidebarToggle.addEventListener('click', function () {
+                const open = sidebar.classList.toggle('is-open');
+                sidebarToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        }
 
         document.querySelectorAll('.opspro-header [data-target], .opspro-footer [data-target], .helpline-card [data-target]').forEach(link => {
             link.addEventListener('click', function (e) {
@@ -1776,6 +1884,23 @@
             menuButton.addEventListener('click', function () {
                 const open = nav.classList.toggle('open');
                 menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        }
+
+        const donationDialog = document.getElementById('donationDialog');
+        const donationButton = document.querySelector('.opspro-donate-btn');
+        const donationCloseButton = document.querySelector('.opspro-donation-close');
+        if (donationDialog && donationButton && typeof donationDialog.showModal === 'function') {
+            donationButton.addEventListener('click', function () {
+                if (nav) nav.classList.remove('open');
+                if (menuButton) menuButton.setAttribute('aria-expanded', 'false');
+                donationDialog.showModal();
+            });
+            donationCloseButton.addEventListener('click', function () {
+                donationDialog.close();
+            });
+            donationDialog.addEventListener('click', function (event) {
+                if (event.target === donationDialog) donationDialog.close();
             });
         }
 
